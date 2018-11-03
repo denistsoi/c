@@ -2,6 +2,7 @@
   <div id="app">
     <header-nav />
     <dialog 
+
       :dialogue="dialogue" />
     <talker 
       v-model="value"
@@ -33,8 +34,20 @@ export default {
     addToDialog() {
       const comment = this.value;
 
-      
+      // sent this comment via axios / request
       console.log('comment:', comment)
+
+      const message = {
+        "text": comment.trim(),
+        "type": "user",
+        createdAt: new Date().toISOString()
+      }
+
+      this.dialogue.push(message);
+      console.log(this.dialogue);
+      // setTimeout(() => {
+      //   this.value = '';
+      // }, 2000)
     }
   }
 }

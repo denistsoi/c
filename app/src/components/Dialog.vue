@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ dialogue }}
+    {{ dialogue.length }}
   </div>
 </template>
 
