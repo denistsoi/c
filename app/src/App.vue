@@ -1,19 +1,41 @@
 <template>
   <div id="app">
     <header-nav />
-    <talker class="fixed pin-b w-full" />
+    <dialog 
+      :dialogue="dialogue" />
+    <talker 
+      v-model="value"
+      @submit="addToDialog"
+      @click="addToDialog"
+      />
   </div>
 </template>
 
 <script>
 import HeaderNav from './components/Header.vue';
 import Talker from './components/Footer.vue';
+import Dialog from './components/Dialog.vue';
 
 export default {
   name: 'app',
   components: {
+    Dialog,
+    HeaderNav,
     Talker,
-    HeaderNav
+  },
+  data() {
+    return {
+      value: "",
+      dialogue: []
+    }
+  },
+  methods: {
+    addToDialog() {
+      const comment = this.value;
+
+      
+      console.log('comment:', comment)
+    }
   }
 }
 </script>
@@ -25,7 +47,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 
 @font-face {

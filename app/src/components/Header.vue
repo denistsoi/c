@@ -1,5 +1,5 @@
 <template>
-  <div class="header b-color w-full fixed pin-t">
+  <div class="header b-color w-full pin-t">
     
     <div class="p-3">
       <h2>Instant Feedback</h2>
