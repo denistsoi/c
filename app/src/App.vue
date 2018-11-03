@@ -5,6 +5,7 @@
     />
     <dialog-view
       :dialogue="dialogue"
+      :spoken="this.stage.spoken"
       ref="dialog"
       />
     
@@ -13,7 +14,6 @@
       <div class="footer flex content-center items-center justify-between h-16 bg-white w-full">
         <div 
           class="flex items-center px-4 w-full h-full"
-          v-on:click="start"
           >
           <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 0L13.0622 6.75H0.937822L7 0Z" fill="#4C4C4C"/>
@@ -54,7 +54,12 @@ export default {
         onboarded: false,
         spoken: false,
       },
-      dialogue: [],
+      dialogue: [createMessage({ 
+        text: "Hello. How can I help you with today?",
+        type: "cx",
+        name: "Annie",
+        profileImage: "avatarBot@3x.png",
+      })],
 
       timers: [{
         type: 'audio',
@@ -68,6 +73,9 @@ export default {
       }, {
         type: 'response-landing',
         time: 20000
+      }, {
+        type: 'response-apology',
+        time: 21000
       }, { 
         type: 'response-resolution',
         time: 45000
@@ -88,22 +96,10 @@ export default {
       this.dialogue.push(message);
       this.value = "";
     },
-    start() {
-      if (this.stage.onboarded) return;
-
-      const message = createMessage({ 
-        text: "Hello. How can I help you with today?",
-        type: "cx",
-        name: "Annie",
-        profileImage: "avatarBot@3x.png",
-      });
-
-      this.dialogue.push(message);
-      this.stage.onboarded = true;
-    },
     speak() {
       if (this.stage.spoken) return;
-
+      
+      this.stage.spoken = true;
       setTimeout(() => {
         const audio = createMessage({
           type: "user/audio",
@@ -133,24 +129,29 @@ export default {
           dialog.$el.scrollTop = dialog.$el.scrollHeight;
         }, this.timers[1+i].time);
       })
-      this.stage.spoken = true;
-
 
       // after landing
       setTimeout(() => {
-        const afterlanding = createMessage({
+        const afterlanding = [{
           text: `Hello Charlotte, I’m deeply sorry to hear your uncomfortable flight experience. We have routed your experience to our catering facility. Please give us some time for us to conduct further investigation into your food poisoning. \n\nI’ll be here to support you should you have any questions and will continuously update you. Let’s keep in touch here.`,
           type: "cx",
           name: "Annie",
           profileImage: "avatarBot@3x.png",
-        });
+        }, {
+          type: "cx/gif-apology",
+        }];
 
-        this.dialogue.push(afterlanding)
+        afterlanding.map(async(item, i) => {
+          setTimeout(() => {
+            this.dialogue.push(createMessage(item));
+            const { dialog } = this.$refs;
+            dialog.$el.scrollTop = dialog.$el.scrollHeight;
+          }, this.timers[3 + i].time);
+        })
 
         const { dialog } = this.$refs;
         dialog.$el.scrollTop = dialog.$el.scrollHeight;
       }, this.timers[3].time)
-      
 
       // epilogue
       setTimeout(() => {
@@ -164,8 +165,8 @@ export default {
         this.dialogue.push(epilogue)
         const { dialog } = this.$refs;
         dialog.$el.scrollTo = dialog.$el.scrollHeight;
-      }, this.timers[4].time)
-    }
+      }, this.timers[5].time)
+    },
   }
 }
 </script>

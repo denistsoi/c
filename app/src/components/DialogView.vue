@@ -1,5 +1,11 @@
 <template>
-  <div class="w-full bg-dialog pt-2">
+  <div 
+    class="w-full bg-dialog pt-2"
+    :class="[{
+      'not-spoken': !spoken,
+      'spoken':     spoken,
+    }]"
+    >
     <div 
       class="p-2 flex"
       :class="[
@@ -26,12 +32,19 @@
         v-else-if="message.type === 'cx'" 
         :message="message"
         />
+      
+      <cx-image-bubble   
+        class="w-4/5 bg-white rounded-lg rounded-tl p-2"
+        v-else-if="message.type === 'cx/gif-apology'" 
+        :message="message"
+        />
     </div>
   </div>
 </template>
 
 <script>
 import CXSpeechBubble from "./Bubble/CX.vue";
+import CXImageBubble from "./Bubble/Image.vue";
 import UserSpeechBubble from "./Bubble/User.vue";
 import UserAudioBubble from "./Bubble/Audio.vue";
 
@@ -39,6 +52,7 @@ export default {
   name: "dialog-view",
   components: {
     "cx-speech-bubble":   CXSpeechBubble,
+    'cx-image-bubble':    CXImageBubble,
     "user-speech-bubble": UserSpeechBubble,
     "user-audio-bubble":  UserAudioBubble,
   },
@@ -46,6 +60,9 @@ export default {
     dialogue: {
       required: true,
       default: () => {}
+    },
+    spoken: {
+      required: true
     }
   }
 }
@@ -54,9 +71,16 @@ export default {
 <style scoped>
 .bg-dialog {
   background: #E5E5E5;
-  height: calc(100vh - (198px + 96px));
   padding-bottom: 64px;
   overflow-y: scroll;
+}
+
+.not-spoken {
+  height: calc(100vh - (198px + 96px));
+}
+
+.spoken {
+  height: calc(100vh - (110px + 96px));
 }
 
 .bg-user-comment {

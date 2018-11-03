@@ -13,7 +13,7 @@
           :key="user.name + i" 
         >
           <img :src="`image/${user.profileImage}`" class="h-10" />
-          <div>
+          <div v-if="!spoken">
             <span class="text-xs leading-none">{{ user.name }}</span> <br />
             <span class="text-xs leading-none">{{ user.role }}</span>
           </div>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="p-2">
+    <div class="p-2" v-if="!spoken">
       <span class="text-xs leading-none">We’re here to solve the problems during your journey.</span>
     </div>
   </div>
