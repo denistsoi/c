@@ -12,7 +12,7 @@
       Submit
     </button> -->
 
-    
+
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
     }
   },
   methods: {
-    onSubmit(event, value) {
+    onSubmit() {
       if (!this.$props.value || this.$props.value.trim().length === 0) return;
       this.$emit("submit");
     }

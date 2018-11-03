@@ -12,7 +12,6 @@
           v-for="(user, i) in users" 
           :key="user.name + i" 
         >
-          <!-- {{ user }} -->
           <img :src="`image/${user.profileImage}`" class="h-10" />
           <div>
             <span class="text-xs leading-none">{{ user.name }}</span> <br />

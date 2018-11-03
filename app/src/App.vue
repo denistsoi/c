@@ -12,6 +12,7 @@
     
 
     <div 
+      v-if="!onboarded"
       class="flex content-center items-center justify-center h-12"
       v-on:click="start"
       >
@@ -20,13 +21,16 @@
       </svg>
       <span class="ml-1">How can I help?</span>
     </div>
+
+    <microphone />
   </div>
 </template>
 
 <script>
 import HeaderNav from './components/Header.vue';
-import Talker from './components/Footer.vue';
 import DialogView from './components/DialogView.vue';
+import Microphone from "./components/Microphone.vue";
+// import Talker from './components/Footer.vue';
 
 import createMessage from './utils/message';
 
@@ -35,12 +39,14 @@ export default {
   components: {
     DialogView,
     HeaderNav,
-    Talker,
+    Microphone,
+    // Talker,
   },
   data() {
     return {
       value: "",
-      dialogue: []
+      onboarded: false,
+      dialogue: [],
     }
   },
   methods: {
@@ -65,6 +71,8 @@ export default {
         name: "Annie",
         profileImage: "avatarBot@3x.png",
       });
+
+      this.onboarded = true;
       
       this.dialogue.push(message);
     }
@@ -73,6 +81,8 @@ export default {
 </script>
 
 <style>
+@import "./style.css";
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
