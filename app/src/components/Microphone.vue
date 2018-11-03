@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="">
-      <img class="mic rounded-full h-8 w-8 py-1 px-2" src="image/VoiceIcon@3x.png" />
-    </div>
+    <img class="mic rounded-full h-8 w-8 py-1 px-2" src="image/VoiceIcon@3x.png" />
   </div>
 </template>
 

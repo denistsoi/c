@@ -2,9 +2,9 @@
   <div>
     <div class="flex justify-start">
       <img 
-        class="h-6 w-6 border-black border border-solid rounded-full"
+        class="h-6 w-6 border-brand border border-solid rounded-full"
         :src="`image/${message.profileImage}`">
-      <span class="ml-1">{{ message.name }}</span>
+      <span class="ml-1 color-brand">{{ message.name }}</span>
     </div>
     <div>{{ message.text }}</div>
   </div>
@@ -23,5 +23,10 @@ export default {
 </script>
 
 <style scoped>
-
+.border-brand { 
+  border-color: #005B59;
+}
+.color-brand {
+  color: #005B59;
+}
 </style>

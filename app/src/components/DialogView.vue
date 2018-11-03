@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full flex bg-dialog pt-2">
+  <div class="w-full bg-dialog pt-2">
     <div 
-      class="p-2"
+      class="p-2 w-4/5"
       v-for="(message, i) in dialogue" 
       :key="`type${i}`">
 
@@ -41,7 +41,9 @@ export default {
 <style scoped>
 .bg-dialog {
   background: #E5E5E5;
-  height: calc(100vh - (198px + 48px));
+  height: calc(100vh - (198px + 64px));
+  padding-bottom: 64px;
+  overflow-y: scroll;
 }
 
 .bg-user-comment {

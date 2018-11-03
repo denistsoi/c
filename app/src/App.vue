@@ -4,25 +4,31 @@
     <dialog-view
       :dialogue="dialogue"
       />
+    
+
+    <div 
+      class="flex content-center items-center justify-between h-16"
+      
+      >
+      <div 
+        class="flex items-center px-4 w-3/5 h-full"
+        v-on:click="start"
+        >
+        <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 0L13.0622 6.75H0.937822L7 0Z" fill="#4C4C4C"/>
+        </svg>
+        <span class="ml-2">How can I help?</span>
+      </div>
+
+      <microphone class="flex h-full p-4" />
+    </div>
+
     <!-- <talker 
       v-model="value"
       @submit="addToDialog"
       @click="addToDialog"
       /> -->
-    
-
-    <div 
-      v-if="!onboarded"
-      class="flex content-center items-center justify-center h-12"
-      v-on:click="start"
-      >
-      <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 0L13.0622 6.75H0.937822L7 0Z" fill="#4C4C4C"/>
-      </svg>
-      <span class="ml-1">How can I help?</span>
-    </div>
-
-    <microphone />
+      
   </div>
 </template>
 
@@ -64,7 +70,6 @@ export default {
       this.value = "";
     },
     start() {
-
       const message = createMessage({ 
         text: "Hello. How can I help you with today?",
         type: "cx",
@@ -72,9 +77,9 @@ export default {
         profileImage: "avatarBot@3x.png",
       });
 
-      this.onboarded = true;
-      
+      if (this.onboarded) return;
       this.dialogue.push(message);
+      this.onboarded = true;
     }
   }
 }
