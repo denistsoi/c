@@ -5,6 +5,7 @@
     />
     <dialog-view
       :dialogue="dialogue"
+      ref="dialog"
       />
     
 
@@ -21,11 +22,11 @@
         </div>
 
         <div 
-          class="flex h-full p-4 text-white microphone-icon" 
+          class="flex h-full p-2 text-white microphone-icon" 
           v-on:click="speak"
           >
           <div class="bg bg-brand"></div>
-          <img class="mic rounded-full h-8 w-8 py-1 px-2" src="image/VoiceIcon@3x.png" />
+          <img class="mic rounded-full p-2" src="image/VoiceIcon@3x.png" />
         </div>
       </div>
     </div>
@@ -96,6 +97,7 @@ export default {
         name: "Annie",
         profileImage: "avatarBot@3x.png",
       });
+
       this.dialogue.push(message);
       this.stage.onboarded = true;
     },
@@ -126,10 +128,12 @@ export default {
         setTimeout(() => {
           const message = createMessage(item);
           this.dialogue.push(message);
+
+          const { dialog } = this.$refs;
+          dialog.$el.scrollTop = dialog.$el.scrollHeight;
         }, this.timers[1+i].time);
       })
       this.stage.spoken = true;
-
 
 
       // after landing
@@ -142,11 +146,13 @@ export default {
         });
 
         this.dialogue.push(afterlanding)
+
+        const { dialog } = this.$refs;
+        dialog.$el.scrollTop = dialog.$el.scrollHeight;
       }, this.timers[3].time)
       
 
       // epilogue
-
       setTimeout(() => {
         const epilogue = createMessage({
           text: "Hello Charlotte, we are investigating now. We need further details from you. When did you start feeling sick? Was it after your lounge visit, or inflight supper or after your breakfast meal?",
@@ -156,6 +162,8 @@ export default {
         });
 
         this.dialogue.push(epilogue)
+        const { dialog } = this.$refs;
+        dialog.$el.scrollTo = dialog.$el.scrollHeight;
       }, this.timers[4].time)
     }
   }
