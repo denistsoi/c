@@ -47,9 +47,7 @@ export default {
     addToDialog() {
       const comment = this.value;
 
-      // sent this comment via axios / request
-      console.log('comment:', comment)
-
+      // send this comment via axios / request
       const message = {
         "text": comment.trim(),
         "type": "user",
@@ -60,16 +58,14 @@ export default {
       this.value = "";
     },
     start() {
-      
+
       const message = createMessage({ 
         text: "Hello. How can I help you with today?",
         type: "cx",
         name: "Annie",
         profileImage: "avatarBot@3x.png",
-      })
-
-
-
+      });
+      
       this.dialogue.push(message);
     }
   }
@@ -78,12 +74,10 @@ export default {
 
 <style>
 #app {
-  /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
 }
 
 @font-face {

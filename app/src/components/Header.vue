@@ -6,7 +6,7 @@
     </div>
     <!-- icons -->
     <div class="flex justify-center p-2">
-      <div class="flex w-4/5">
+      <div class="flex w-full p2">
         <div 
           class="w-1/3"
           v-for="(user, i) in users" 
