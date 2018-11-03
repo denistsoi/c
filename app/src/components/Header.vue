@@ -13,7 +13,7 @@
           :key="user.name + i" 
         >
           <img :src="`image/${user.profileImage}`" class="h-10" />
-          <div>
+          <div v-if="!spoken">
             <span class="text-xs leading-none">{{ user.name }}</span> <br />
             <span class="text-xs leading-none">{{ user.role }}</span>
           </div>
@@ -30,7 +30,12 @@
 <script>
 export default {
   name: "header-navigation",
-
+  props: {
+    spoken: {
+      required: true,
+      default: false
+    }
+  },
   data() {
     return {
       users: [

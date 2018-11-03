@@ -6,7 +6,7 @@
         :src="`image/${message.profileImage}`">
       <span class="ml-1 color-brand">{{ message.name }}</span>
     </div>
-    <div>{{ message.text }}</div>
+    <div class="flex justify-start text-left">{{ message.text }}</div>
   </div>
 </template>
 

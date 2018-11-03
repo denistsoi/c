@@ -1,42 +1,42 @@
 <template>
   <div id="app">
-    <header-nav />
+    <header-nav 
+      :spoken="this.stage.spoken"
+    />
     <dialog-view
       :dialogue="dialogue"
       />
     
 
-    <div 
-      class="flex content-center items-center justify-between h-16"
-      
-      >
-      <div 
-        class="flex items-center px-4 w-3/5 h-full"
-        v-on:click="start"
-        >
-        <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 0L13.0622 6.75H0.937822L7 0Z" fill="#4C4C4C"/>
-        </svg>
-        <span class="ml-2">How can I help?</span>
+    <div class="footer-wrapper h-24 items-end w-full flex">
+      <div class="footer flex content-center items-center justify-between h-16 bg-white w-full">
+        <div 
+          class="flex items-center px-4 w-full h-full"
+          v-on:click="start"
+          >
+          <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 0L13.0622 6.75H0.937822L7 0Z" fill="#4C4C4C"/>
+          </svg>
+          <span class="ml-2">How can I help?</span>
+        </div>
+
+        <div 
+          class="flex h-full p-4 text-white microphone-icon" 
+          v-on:click="speak"
+          >
+          <div class="bg bg-brand"></div>
+          <img class="mic rounded-full h-8 w-8 py-1 px-2" src="image/VoiceIcon@3x.png" />
+        </div>
       </div>
-
-      <microphone class="flex h-full p-4" />
     </div>
-
-    <!-- <talker 
-      v-model="value"
-      @submit="addToDialog"
-      @click="addToDialog"
-      /> -->
       
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 import HeaderNav from './components/Header.vue';
 import DialogView from './components/DialogView.vue';
-import Microphone from "./components/Microphone.vue";
-// import Talker from './components/Footer.vue';
 
 import createMessage from './utils/message';
 
@@ -45,14 +45,32 @@ export default {
   components: {
     DialogView,
     HeaderNav,
-    Microphone,
-    // Talker,
   },
   data() {
     return {
       value: "",
-      onboarded: false,
+      stage: {
+        onboarded: false,
+        spoken: false,
+      },
       dialogue: [],
+
+      timers: [{
+        type: 'audio',
+        time: 5000
+      }, {
+        type: 'response-audio-1',
+        time: 9000
+      }, { 
+        type: 'response-audio-2',
+        time: 12000
+      }, {
+        type: 'response-landing',
+        time: 20000
+      }, { 
+        type: 'response-resolution',
+        time: 45000
+      }]
     }
   },
   methods: {
@@ -70,16 +88,75 @@ export default {
       this.value = "";
     },
     start() {
+      if (this.stage.onboarded) return;
+
       const message = createMessage({ 
         text: "Hello. How can I help you with today?",
         type: "cx",
         name: "Annie",
         profileImage: "avatarBot@3x.png",
       });
-
-      if (this.onboarded) return;
       this.dialogue.push(message);
-      this.onboarded = true;
+      this.stage.onboarded = true;
+    },
+    speak() {
+      if (this.stage.spoken) return;
+
+      setTimeout(() => {
+        const audio = createMessage({
+          type: "user/audio",
+        })
+        this.dialogue.push(audio);
+      }, this.timers[0].time)
+
+      // during inflight
+      const during = [{ 
+        text: "Hello Charlotte! Thank you for your feedback. My name is Annie. I’m your personal concierge for this case and I’ll be following your case closely now. I will contact you immediately once our flight has touched down. Please make sure you have access to wifi or data connection after you have touched down so that we could continue our conversation.",
+        type: "cx",
+        name: "Annie",
+        profileImage: "avatarBot@3x.png",
+      }, {
+        text: "If you have any other things that would like to let us know, please do message me here. We are here to listen to your voice. ",
+        type: "cx",
+        name: "Annie",
+        profileImage: "avatarBot@3x.png",
+      }];
+
+      during.map(async(item, i) => {
+        setTimeout(() => {
+          const message = createMessage(item);
+          this.dialogue.push(message);
+        }, this.timers[1+i].time);
+      })
+      this.stage.spoken = true;
+
+
+
+      // after landing
+      setTimeout(() => {
+        const afterlanding = createMessage({
+          text: `Hello Charlotte, I’m deeply sorry to hear your uncomfortable flight experience. We have routed your experience to our catering facility. Please give us some time for us to conduct further investigation into your food poisoning. \n\nI’ll be here to support you should you have any questions and will continuously update you. Let’s keep in touch here.`,
+          type: "cx",
+          name: "Annie",
+          profileImage: "avatarBot@3x.png",
+        });
+
+        this.dialogue.push(afterlanding)
+      }, this.timers[3].time)
+      
+
+      // epilogue
+
+      setTimeout(() => {
+        const epilogue = createMessage({
+          text: "Hello Charlotte, we are investigating now. We need further details from you. When did you start feeling sick? Was it after your lounge visit, or inflight supper or after your breakfast meal?",
+          type: "cx",
+          name: "Annie",
+          profileImage: "avatarBot@3x.png",
+        });
+
+        this.dialogue.push(epilogue)
+      }, this.timers[4].time)
     }
   }
 }
@@ -93,6 +170,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  max-width: 768px;
+  margin: auto;
 }
 
 @font-face {
@@ -103,6 +182,16 @@ export default {
 body {
   --brand-color: #005B59;
   --font-color: #fff;
+}
+
+.footer {
+  position: relative;
+}
+
+.footer-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: #E5E5E5;
 }
 
 *, p, h1, h2, span, button {
@@ -122,4 +211,30 @@ body {
   /* background: #005B59; */
 }
 
+.microphone-icon {
+  /* transition: .2s background-color linear; */
+}
+.microphone-icon:hover {
+  transition: .3s background-color linear;
+  cursor: pointer;
+  background: var(--brand-color);
+}
+
+.microphone-icon:hover .bg {
+  background: var(--brand-color);
+  height: 64px;
+  width: 64px;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  transition: .3s transform linear .3s border-radius linear;
+  border-radius: 50%;
+  transform: scale(2)
+}
+.mic {
+  background: #005B59;
+  width: auto;
+  z-index: 2;
+}
 </style>
