@@ -8,17 +8,15 @@
 <script>
 /* eslint-disable */
 import VueQr from 'vue-qr';
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
     VueQr
   },
   data() {
     return {
-      url: "http://2000d943.ngrok.io"
+      url: "https://cx-app.now.sh"
     }
   },
   methods: {
