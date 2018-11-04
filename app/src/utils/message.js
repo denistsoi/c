@@ -2,11 +2,13 @@ export default ({
   text,
   name,
   type = 'user',
-  profileImage
+  profileImage,
+  date
 }) => ({
   text,
   name,
   type,
   profileImage,
-  createdAt: new Date().toISOString()
+  createdAt: new Date().toISOString(),
+  date
 })

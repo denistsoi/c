@@ -1,10 +1,16 @@
 <template>
   <div>
-    <div class="flex justify-start">
-      <img 
-        class="h-6 w-6 border-brand border border-solid rounded-full"
-        :src="`image/${message.profileImage}`">
-      <span class="ml-1 color-brand">{{ message.name }}</span>
+    <div class="flex justify-between">
+      <div class="flex justify-start">
+        <img 
+          class="h-6 w-6 border-brand border border-solid rounded-full"
+          :src="`image/${message.profileImage}`">
+        <span class="ml-1 color-brand">{{ message.name }}</span>
+      </div>
+
+      <div class="flex items-center" v-if="message.date">
+        <span class="mr-1 text-xs">{{ message.date }}</span>
+      </div>
     </div>
     <div class="flex justify-start text-left">{{ message.text }}</div>
   </div>
