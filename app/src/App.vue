@@ -37,7 +37,9 @@
           <img class="mic rounded-full p-2" src="image/VoiceIcon@3x.png" />
         </div>
       </div>
-      <div class="w-full" v-if="this.stage.followup"><follow-up /></div>
+      <follow-up 
+        class="w-full follow-up" v-if="this.stage.followup"
+        />
     </div>
 
     
@@ -146,6 +148,7 @@ export default {
         })
       }
 
+      if (this.stage.spoken) return;
       // after landing
       setTimeout(() => {
         const afterlanding = createMessage({
@@ -281,6 +284,11 @@ body {
 .mic {
   background: #005B59;
   width: auto;
-  z-index: 2;
+  z-index: 2;  
+}
+
+.follow-up {
+  position: absolute;
+  bottom: 0;
 }
 </style>
