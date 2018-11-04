@@ -150,7 +150,7 @@ export default {
         // after landing
         setTimeout(() => {
           const afterlanding = createMessage({
-            date: "3 hours later",
+            date: "12 hours later",
             text: `Hello Charlotte, I’m deeply sorry to hear your uncomfortable flight experience. We have routed your experience to our catering facility. Please give us some time for us to conduct further investigation into your food poisoning. \n\nI’ll be here to support you should you have any questions and will continuously update you. Let’s keep in touch here.`,
             type: "cx",
             name: "Annie",
