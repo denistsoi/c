@@ -156,7 +156,7 @@ export default {
           profileImage: "avatarBot@3x.png",
         });
 
-        this.dialog.push(afterlanding);
+        this.dialogue.push(afterlanding);
 
         const { dialog } = this.$refs;
         dialog.$el.scrollTop = dialog.$el.scrollHeight;
@@ -167,7 +167,7 @@ export default {
           type: "cx/gif-apology",
         })
 
-        this.dialog.push(apology);
+        this.dialogue.push(apology);
         const { dialog } = this.$refs;
         dialog.$el.scrollTop = dialog.$el.scrollHeight;
       }, this.timers[4].time)
