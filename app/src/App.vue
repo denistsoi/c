@@ -38,7 +38,7 @@
         </div>
       </div>
       <follow-up 
-        class="w-full follow-up" v-if="this.stage.followup"
+        class="w-full follow-up " v-if="this.stage.followup"
         />
     </div>
 
@@ -94,7 +94,7 @@ export default {
         time: 20000
       }, { 
         type: 'response-resolution',
-        time: 40000
+        time: 25000
       }]
     }
   },
@@ -289,5 +289,8 @@ body {
 .follow-up {
   position: absolute;
   bottom: 0;
+  
+  background: #F0F0F0;
+  border-top: 3px solid #005B59;
 }
 </style>
