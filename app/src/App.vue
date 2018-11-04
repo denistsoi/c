@@ -146,65 +146,64 @@ export default {
             dialog.$el.scrollTop = dialog.$el.scrollHeight;
           }, this.timers[1+i].time);
         })
+
+        // after landing
+        setTimeout(() => {
+          const afterlanding = createMessage({
+            date: "3 hours later",
+            text: `Hello Charlotte, I’m deeply sorry to hear your uncomfortable flight experience. We have routed your experience to our catering facility. Please give us some time for us to conduct further investigation into your food poisoning. \n\nI’ll be here to support you should you have any questions and will continuously update you. Let’s keep in touch here.`,
+            type: "cx",
+            name: "Annie",
+            profileImage: "avatarBot@3x.png",
+          });
+
+          this.dialogue.push(afterlanding);
+
+          const { dialog } = this.$refs;
+          dialog.$el.scrollTop = dialog.$el.scrollHeight;
+        }, this.timers[3].time);
+
+        setTimeout(() => {
+          const apology = createMessage({
+            type: "cx/gif-apology",
+          })
+
+          this.dialogue.push(apology);
+          const { dialog } = this.$refs;
+          dialog.$el.scrollTop = dialog.$el.scrollHeight;
+        }, this.timers[4].time)
+          
+
+        // epilogue
+        setTimeout(() => {
+          const epilogue = createMessage({
+            date: "2 days later",
+            text: "Hello Charlotte, we are investigating now. We need further details from you. When did you start feeling sick? Was it after your lounge visit, or inflight supper or after your breakfast meal?",
+            type: "cx",
+            name: "Annie",
+            profileImage: "avatarBot@3x.png",
+          });
+
+          this.dialogue.push(epilogue)
+          const { dialog } = this.$refs;
+          dialog.$el.scrollTo = dialog.$el.scrollHeight;
+        }, this.timers[5].time)
+
+        setTimeout(() => {
+          const follow = createMessage({
+            text: "Please select one of the follow up channels below so that we may continue our investigation into your situation.",
+            type: "cx",
+            name: "Annie",
+            profileImage: "avatarBot@3x.png",
+          });
+
+          this.dialogue.push(follow);
+          const { dialog } = this.$refs;
+          dialog.$el.scrollTo = dialog.$el.scrollHeight;
+
+          this.stage.followup = true;
+        }, this.timers[5].time + 1000)
       }
-
-      if (this.stage.spoken) return;
-      // after landing
-      setTimeout(() => {
-        const afterlanding = createMessage({
-          date: "3 hours later",
-          text: `Hello Charlotte, I’m deeply sorry to hear your uncomfortable flight experience. We have routed your experience to our catering facility. Please give us some time for us to conduct further investigation into your food poisoning. \n\nI’ll be here to support you should you have any questions and will continuously update you. Let’s keep in touch here.`,
-          type: "cx",
-          name: "Annie",
-          profileImage: "avatarBot@3x.png",
-        });
-
-        this.dialogue.push(afterlanding);
-
-        const { dialog } = this.$refs;
-        dialog.$el.scrollTop = dialog.$el.scrollHeight;
-      }, this.timers[3].time);
-
-      setTimeout(() => {
-        const apology = createMessage({
-          type: "cx/gif-apology",
-        })
-
-        this.dialogue.push(apology);
-        const { dialog } = this.$refs;
-        dialog.$el.scrollTop = dialog.$el.scrollHeight;
-      }, this.timers[4].time)
-        
-
-      // epilogue
-      setTimeout(() => {
-        const epilogue = createMessage({
-          date: "2 days later",
-          text: "Hello Charlotte, we are investigating now. We need further details from you. When did you start feeling sick? Was it after your lounge visit, or inflight supper or after your breakfast meal?",
-          type: "cx",
-          name: "Annie",
-          profileImage: "avatarBot@3x.png",
-        });
-
-        this.dialogue.push(epilogue)
-        const { dialog } = this.$refs;
-        dialog.$el.scrollTo = dialog.$el.scrollHeight;
-      }, this.timers[5].time)
-
-      setTimeout(() => {
-        const follow = createMessage({
-          text: "Please select one of the follow up channels below so that we may continue our investigation into your situation.",
-          type: "cx",
-          name: "Annie",
-          profileImage: "avatarBot@3x.png",
-        });
-
-        this.dialogue.push(follow);
-        const { dialog } = this.$refs;
-        dialog.$el.scrollTo = dialog.$el.scrollHeight;
-
-        this.stage.followup = true;
-      }, this.timers[5].time + 1000)
     },
   }
 }
